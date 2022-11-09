@@ -42,11 +42,12 @@ def generate_content(code: int, url: str) -> str:
     :param url: str
     :return: str
     """
+
     if code == 404:
         return "<h1>404</h1><p>Not found</p>"
     if code == 405:
         return "<h1>405</h1><p>Method not allowed</p>"
-    return f"<h1>{URLS[url]}</h1>"
+    return URLS[url]()
 
 
 def generate_response(request: str) -> bytes:
@@ -77,6 +78,7 @@ def run_server() -> None:
         client_socket, addr = server_socket.accept()
         request = client_socket.recv(KB_SIZE)
         print(request.decode("utf-8"), "\n", addr)
+        print("\n")
 
         response = generate_response(request.decode("utf-8"))
 
